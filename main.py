@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, Form
 from fastapi.responses import Response
 from twilio.twiml.messaging_response import MessagingResponse
 from langchain_openai import ChatOpenAI
-from langchain_core.messages import HumanMessage, SystemMessage # Import necessary message types
+from langchain_core.messages import HumanMessage, SystemMessage 
 from dotenv import load_dotenv
 import os
 
@@ -29,11 +29,7 @@ llm = ChatOpenAI(**llm_params)
 
 app = FastAPI()
 
-# Define the static prompt as a system message
-#
-# THIS IS THE FINAL, CORRECTED PROMPT. IT COMBINES YOUR FULL, DETAILED
-# TEXT WITH ALL THE NEW RULES AND LINKS WE DISCUSSED.
-#
+
 SYSTEM_PROMPT = """
 You are a friendly and helpful AI assistant for Anusha Technovision Pvt. Ltd. (ATPL). Your goal is to provide information about ATPL and guide potential clients to see the work in person.
 
@@ -134,13 +130,13 @@ async def whatsapp_webhook(From: str = Form(...), Body: str = Form(...)):
     print(f"Message from {sender_id}: {user_msg}")
 
     try:
-        # Construct the messages list with the system prompt and user's query
+        
         messages = [
             SystemMessage(content=SYSTEM_PROMPT),
             HumanMessage(content=user_msg)
         ]
         
-        response = await llm.ainvoke(messages) # Pass the list of messages to the LLM
+        response = await llm.ainvoke(messages) 
         ai_reply = response.content.strip()
         print(f"AI Reply: {ai_reply}")
 
